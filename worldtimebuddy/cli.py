@@ -4,12 +4,28 @@ import click
 
 MAJOR_TIMEZONES = ['UTC', 'US/Pacific', 'Asia/Kolkata']
 
+# Mapping of short timezone codes to full names
+timezone_codes = {
+    'IST': 'Asia/Kolkata',
+    'PST': 'US/Pacific',
+    'EST': 'US/Eastern',
+    'CST': 'US/Central',
+    'MST': 'US/Mountain',
+    'GMT': 'Europe/London',
+    'CET': 'Europe/Paris',
+    'EET': 'Europe/Athens',
+    'JST': 'Asia/Tokyo',
+    'AEST': 'Australia/Sydney',
+    'UTC': 'UTC'
+}
+
 @click.command()
 @click.option('--format', default='%Y-%m-%d %H:%M:%S', help='DateTime format string')
 @click.option('--major', is_flag=True, help='Show only major timezones')
 @click.option('--timezone', '-tz', help='Show time for a specific timezone')
 @click.option('--list', 'list_timezones', is_flag=True, help='List all available timezones')
-def cli(format, major, timezone, list_timezones):
+@click.option('--delta', help='Time to add (e.g., +2hr, -30min, -1day)')
+def cli(format, major, timezone, list_timezones, delta):
     """
     Display current time for all timezones, major timezones, or a specific timezone.
     """
@@ -21,9 +37,27 @@ def cli(format, major, timezone, list_timezones):
     now = datetime.datetime.now(pytz.utc)
     
     if timezone:
+        # Map short timezone code to full name if applicable
+        timezone = timezone_codes.get(timezone, timezone)
+        
         try:
             tz = pytz.timezone(timezone)
             time = now.astimezone(tz)
+            
+            if delta:
+                if 'hr' in delta:
+                    hours = int(delta.replace('hr', ''))
+                    time += datetime.timedelta(hours=hours)
+                elif 'min' in delta:
+                    minutes = int(delta.replace('min', ''))
+                    time += datetime.timedelta(minutes=minutes)
+                elif 'day' in delta:
+                    days = int(delta.replace('day', ''))
+                    time += datetime.timedelta(days=days)
+                else:
+                    click.echo("Error: Invalid time format. Use +2hr, -30min, -1day, etc.")
+                    return
+
             click.echo(f"{timezone:<30} {time.strftime(format)}")
         except pytz.exceptions.UnknownTimeZoneError:
             click.echo(f"Error: Unknown timezone '{timezone}'")
