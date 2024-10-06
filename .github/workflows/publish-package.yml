@@ -1,4 +1,4 @@
-name: Publish worldtimebudy
+name: Publish worldtimebuddy
 
 on:
   release:
