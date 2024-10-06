@@ -2,7 +2,9 @@ import datetime
 import pytz
 import click
 
-MAJOR_TIMEZONES = ['UTC', 'US/Pacific', 'Asia/Kolkata']
+from worldtimebuddy.utils import get_major_tz_from_env
+
+MAJOR_TIMEZONES = get_major_tz_from_env() or ['UTC', 'US/Pacific', 'Asia/Kolkata']
 
 @click.command()
 @click.option('--format', default='%Y-%m-%d %H:%M:%S', help='DateTime format string')

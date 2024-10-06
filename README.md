@@ -43,7 +43,11 @@ Africa/Addis_Ababa             Sunday, October 06, 2024 04:49 PM EAT
 
 3. Get major timezones
 
-Currenlty only IST/PST/PDT/UTC
+Currenlty only IST/PST/PDT/UTC by default. But user can set major timezone 
+in their environment with name `MAJOR_TIMEZONES`, this tool pick up those as the major
+versions.
+
+eg. export MAJOR_TIMEZONES=["UTC", "Asia/Kolkata"]
 
 `worldtimebuddy --major`
 
