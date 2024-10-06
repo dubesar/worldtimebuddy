@@ -16,8 +16,22 @@ Options:
   --major               Show only major timezones
   -tz, --timezone TEXT  Show time for a specific timezone
   --list                List all available timezones
+  --delta TEXT          Add or subtract time from a particular timezone
   --help                Show this message and exit.
 ```
+### Installation:
+1. Clone the repository locally
+``` bash
+git clone https://github.com/dubesar/worldtimebuddy.git
+cd worldtimebuddy
+```
+2. Run the following code to install dependencies and worldtimebuddy
+``` bash
+pip install -r requirements.txt
+python3 setup.py built
+python3 setup.py install
+```
+
 
 ### Usage:
 
@@ -75,4 +89,20 @@ Africa/Algiers
 `worldtimebuddy --timezone UTC`
 
 UTC                            2024-10-06 13:52:37
+...
+
+
+6. Getting a difference of time from a particular timezone 
+(supported time formats: +/- min, hr, day)
+without --delta argument
+`worldtimebuddy --timezone UTC`
+
+UTC                            2024-10-06 18:43:35
+
+
+with --delta argument
+`worldtimebuddy --timezone UTC --delta +2hr`
+
+UTC                            2024-10-06 20:43:35
+
 ```

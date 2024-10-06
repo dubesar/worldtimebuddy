@@ -2,6 +2,10 @@ import os
 from typing import List
 import datetime
 
+class DeltaValueError(Exception):
+    """Custom exception for invalid delta format."""
+    pass
+
 def get_major_tz_from_env() -> List[str]:
     try:
         major_time_zones = os.environ.get("MAJOR_TIMEZONES", None)
@@ -20,5 +24,5 @@ def callDelta(time: datetime.datetime, delta: str) -> datetime.datetime:
         days = int(delta.replace('day', ''))
         time += datetime.timedelta(days=days)
     else:
-        raise ValueError("Invalid time format. Use +2hr, -30min, -1day, etc.")
+        raise DeltaValueError("Invalid time format. Use +2hr, -30min, -1day, etc.")
     return time
