@@ -1,7 +1,7 @@
 # worldtimebuddy
 Get current time for all possible timezone using CLI (exclusively for developers)
 
-Version - 0.1.2
+Version - 0.1.3
 
 [![Publish worldtimebuddy](https://github.com/dubesar/worldtimebuddy/actions/workflows/publish-package.yml/badge.svg)](https://github.com/dubesar/worldtimebuddy/actions/workflows/publish-package.yml)
 
