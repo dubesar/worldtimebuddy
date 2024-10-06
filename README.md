@@ -64,6 +64,10 @@ eg.
 > export MAJOR_TIMEZONES=["UTC", "Asia/Kolkata"]
 > worldtimebuddy --major
 
+eg. export MAJOR_TIMEZONES=["UTC","Asia/Kolkata"]
+
+`worldtimebuddy --major`
+
 UTC                            2024-10-06 13:50:26
 PDT                            2024-10-06 06:50:26
 Asia/Kolkata                   2024-10-06 19:20:26
