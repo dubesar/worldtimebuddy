@@ -2,24 +2,10 @@ import datetime
 import pytz
 import click
 
-from worldtimebuddy.utils import get_major_tz_from_env
+from worldtimebuddy.utils import get_major_tz_from_env, callDelta
+from worldtimebuddy.constants import timezone_codes
 
 MAJOR_TIMEZONES = get_major_tz_from_env() or ['UTC', 'US/Pacific', 'Asia/Kolkata']
-
-# Mapping of short timezone codes to full names
-timezone_codes = {
-    'IST': 'Asia/Kolkata',
-    'PST': 'US/Pacific',
-    'EST': 'US/Eastern',
-    'CST': 'US/Central',
-    'MST': 'US/Mountain',
-    'GMT': 'Europe/London',
-    'CET': 'Europe/Paris',
-    'EET': 'Europe/Athens',
-    'JST': 'Asia/Tokyo',
-    'AEST': 'Australia/Sydney',
-    'UTC': 'UTC'
-}
 
 @click.command()
 @click.option('--format', default='%Y-%m-%d %H:%M:%S', help='DateTime format string')
@@ -47,17 +33,10 @@ def cli(format, major, timezone, list_timezones, delta):
             time = now.astimezone(tz)
             
             if delta:
-                if 'hr' in delta:
-                    hours = int(delta.replace('hr', ''))
-                    time += datetime.timedelta(hours=hours)
-                elif 'min' in delta:
-                    minutes = int(delta.replace('min', ''))
-                    time += datetime.timedelta(minutes=minutes)
-                elif 'day' in delta:
-                    days = int(delta.replace('day', ''))
-                    time += datetime.timedelta(days=days)
-                else:
-                    click.echo("Error: Invalid time format. Use +2hr, -30min, -1day, etc.")
+                try:
+                    time = callDelta(time, delta)
+                except ValueError as e:
+                    click.echo(f"Error: {e}")
                     return
 
             click.echo(f"{timezone:<30} {time.strftime(format)}")
