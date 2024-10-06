@@ -1,5 +1,10 @@
 import os
 from typing import List
+import datetime
+
+class DeltaValueError(Exception):
+    """Custom exception for invalid delta format."""
+    pass
 
 def get_major_tz_from_env() -> List[str]:
     try:
@@ -7,3 +12,17 @@ def get_major_tz_from_env() -> List[str]:
         return list(major_time_zones[1:len(major_time_zones) - 1].split(','))
     except:
         return []
+
+def callDelta(time: datetime.datetime, delta: str) -> datetime.datetime:
+    if 'hr' in delta:
+        hours = int(delta.replace('hr', ''))
+        time += datetime.timedelta(hours=hours)
+    elif 'min' in delta:
+        minutes = int(delta.replace('min', ''))
+        time += datetime.timedelta(minutes=minutes)
+    elif 'day' in delta:
+        days = int(delta.replace('day', ''))
+        time += datetime.timedelta(days=days)
+    else:
+        raise DeltaValueError("Invalid time format. Use +2hr, -30min, -1day, etc.")
+    return time

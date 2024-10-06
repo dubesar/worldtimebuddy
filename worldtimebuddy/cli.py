@@ -2,7 +2,8 @@ import datetime
 import pytz
 import click
 
-from worldtimebuddy.utils import get_major_tz_from_env
+from worldtimebuddy.utils import get_major_tz_from_env, callDelta, DeltaValueError
+from worldtimebuddy.constants import timezone_codes
 
 MAJOR_TIMEZONES = get_major_tz_from_env() or ['UTC', 'US/Pacific', 'Asia/Kolkata']
 
@@ -11,7 +12,8 @@ MAJOR_TIMEZONES = get_major_tz_from_env() or ['UTC', 'US/Pacific', 'Asia/Kolkata
 @click.option('--major', is_flag=True, help='Show only major timezones')
 @click.option('--timezone', '-tz', help='Show time for a specific timezone')
 @click.option('--list', 'list_timezones', is_flag=True, help='List all available timezones')
-def cli(format, major, timezone, list_timezones):
+@click.option('--delta', help='Time to add (e.g., +2hr, -30min, -1day)')
+def cli(format, major, timezone, list_timezones, delta):
     """
     Display current time for all timezones, major timezones, or a specific timezone.
     """
@@ -23,9 +25,20 @@ def cli(format, major, timezone, list_timezones):
     now = datetime.datetime.now(pytz.utc)
     
     if timezone:
+        # Map short timezone code to full name if applicable
+        timezone = timezone_codes.get(timezone, timezone)
+        
         try:
             tz = pytz.timezone(timezone)
             time = now.astimezone(tz)
+            
+            if delta:
+                try:
+                    time = callDelta(time, delta)
+                except DeltaValueError as e:
+                    click.echo(f"DeltaValueError: {e}")
+                    return
+
             click.echo(f"{timezone:<30} {time.strftime(format)}")
         except pytz.exceptions.UnknownTimeZoneError:
             click.echo(f"Error: Unknown timezone '{timezone}'")
