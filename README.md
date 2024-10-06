@@ -28,41 +28,41 @@ cd worldtimebuddy
 2. Run the following code to install dependencies and worldtimebuddy
 ``` bash
 pip install -r requirements.txt
-python3 setup.py built
+python3 setup.py build
 python3 setup.py install
 ```
 
 
 ### Usage:
 
-```
-1. Get all the timezones
 
-`worldtimebuddy`
+1. Get all the timezones
+```
+> worldtimebuddy
 
 Africa/Abidjan                 2024-10-06 13:49:11
 Africa/Accra                   2024-10-06 13:49:11
 ....
-
+```
 
 2. Get all timezone in particular format
-
-`worldtimebuddy --format '%A, %B %d, %Y %I:%M %p %Z'`
+```
+> worldtimebuddy --format '%A, %B %d, %Y %I:%M %p %Z'
 
 Africa/Abidjan                 Sunday, October 06, 2024 01:49 PM GMT
 Africa/Accra                   Sunday, October 06, 2024 01:49 PM GMT
 Africa/Addis_Ababa             Sunday, October 06, 2024 04:49 PM EAT
 ...
-
+```
 
 3. Get major timezones
 
 Currenlty only IST/PST/PDT/UTC by default. But user can set major timezones in their environment with name `MAJOR_TIMEZONES`, this tool will pick up those as the major
 versions.
-
-eg. export MAJOR_TIMEZONES=["UTC", "Asia/Kolkata"]
-
-`worldtimebuddy --major`
+eg.
+```
+> export MAJOR_TIMEZONES=["UTC", "Asia/Kolkata"]
+> worldtimebuddy --major
 
 UTC                            2024-10-06 13:50:26
 PDT                            2024-10-06 06:50:26
@@ -71,38 +71,39 @@ Asia/Kolkata                   2024-10-06 19:20:26
 UTC                            Sunday, October 06, 2024 01:50 PM UTC
 PDT                            Sunday, October 06, 2024 06:50 AM PDT
 Asia/Kolkata                   Sunday, October 06, 2024 07:20 PM IST
-
+```
 
 4. Listing all timezones
-
-`worldtimebuddy --list`
+```
+> worldtimebuddy --list
 
 Africa/Abidjan
 Africa/Accra
 Africa/Addis_Ababa
 Africa/Algiers
 ...
-
+```
 
 5. Getting a particular timezone
-
-`worldtimebuddy --timezone UTC`
+```
+> worldtimebuddy --timezone UTC
 
 UTC                            2024-10-06 13:52:37
 ...
+```
 
-
-6. Getting a difference of time from a particular timezone 
-(supported time formats: +/- min, hr, day)
-without --delta argument
-`worldtimebuddy --timezone UTC`
+6. Getting a difference of time from a particular timezone <br> (supported time formats: +/- min, hr, day) 
+`without --delta argument`
+```
+> worldtimebuddy --timezone UTC
 
 UTC                            2024-10-06 18:43:35
-
-
-with --delta argument
-`worldtimebuddy --timezone UTC --delta +2hr`
+...
+```
+`with --delta argument`
+```
+> worldtimebuddy --timezone UTC --delta +2hr
 
 UTC                            2024-10-06 20:43:35
-
+...
 ```
