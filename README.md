@@ -67,10 +67,6 @@ eg.
 UTC                            2024-10-06 13:50:26
 PDT                            2024-10-06 06:50:26
 Asia/Kolkata                   2024-10-06 19:20:26
-
-UTC                            Sunday, October 06, 2024 01:50 PM UTC
-PDT                            Sunday, October 06, 2024 06:50 AM PDT
-Asia/Kolkata                   Sunday, October 06, 2024 07:20 PM IST
 ```
 
 4. Listing all timezones
@@ -87,20 +83,14 @@ Africa/Algiers
 5. Getting a particular timezone
 ```
 > worldtimebuddy --timezone UTC
+UTC                            2024-10-06 19:33:35
 
-UTC                            2024-10-06 13:52:37
+> worldtimebuddy --timezone JST
+Asia/Tokyo                     2024-10-07 04:33:35
 ...
 ```
 
 6. Getting a difference of time from a particular timezone <br> (supported time formats: +/- min, hr, day) 
-`without --delta argument`
-```
-> worldtimebuddy --timezone UTC
-
-UTC                            2024-10-06 18:43:35
-...
-```
-`with --delta argument`
 ```
 > worldtimebuddy --timezone UTC --delta +2hr
 
