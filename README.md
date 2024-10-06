@@ -46,7 +46,7 @@ Africa/Addis_Ababa             Sunday, October 06, 2024 04:49 PM EAT
 Currenlty only IST/PST/PDT/UTC by default. But user can set major timezones in their environment with name `MAJOR_TIMEZONES`, this tool will pick up those as the major
 versions.
 
-eg. export MAJOR_TIMEZONES=["UTC", "Asia/Kolkata"]
+eg. export MAJOR_TIMEZONES=["UTC","Asia/Kolkata"]
 
 `worldtimebuddy --major`
 
