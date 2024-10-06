@@ -24,7 +24,7 @@ setup(
     url='https://github.com/dubesar/worldtimebuddy',
     classifiers=[
         "Programming Language :: Python :: 3",
-        "License :: OSI Approved :: Apache-2.0 License",
+        "License :: OSI Approved :: Apache License",
         "Operating System :: OS Independent",
     ],
 )
