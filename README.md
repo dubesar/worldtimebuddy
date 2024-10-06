@@ -61,7 +61,7 @@ Currenlty only IST/PST/PDT/UTC by default. But user can set major timezones in t
 versions.
 eg.
 ```
-> export MAJOR_TIMEZONES=["UTC", "Asia/Kolkata"]
+> MAJOR_TIMEZONES=["UTC", "Asia/Kolkata"]
 > worldtimebuddy --major
 
 UTC                            2024-10-06 13:50:26
