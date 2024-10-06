@@ -64,10 +64,6 @@ eg.
 > export MAJOR_TIMEZONES=["UTC", "Asia/Kolkata"]
 > worldtimebuddy --major
 
-eg. export MAJOR_TIMEZONES=["UTC","Asia/Kolkata"]
-
-`worldtimebuddy --major`
-
 UTC                            2024-10-06 13:50:26
 PDT                            2024-10-06 06:50:26
 Asia/Kolkata                   2024-10-06 19:20:26
@@ -97,7 +93,6 @@ Asia/Tokyo                     2024-10-07 04:33:35
 6. Getting a difference of time from a particular timezone <br> (supported time formats: +/- min, hr, day) 
 ```
 > worldtimebuddy --timezone UTC --delta +2hr
-
 UTC                            2024-10-06 20:43:35
 ...
 ```
