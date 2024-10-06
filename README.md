@@ -1,7 +1,7 @@
 # worldtimebuddy
 Get current time for all possible timezone using CLI (exclusively for developers)
 
-Version - 0.1.2
+Version - 0.1.3
 
 [![Publish worldtimebuddy](https://github.com/dubesar/worldtimebuddy/actions/workflows/publish-package.yml/badge.svg)](https://github.com/dubesar/worldtimebuddy/actions/workflows/publish-package.yml)
 
@@ -19,7 +19,12 @@ Options:
   --delta TEXT          Add or subtract time from a particular timezone
   --help                Show this message and exit.
 ```
-### Installation:
+
+### Installation (PyPI):
+
+`pip3 install worldtimebuddy`
+
+### Installation (Development):
 1. Clone the repository locally
 ``` bash
 git clone https://github.com/dubesar/worldtimebuddy.git
