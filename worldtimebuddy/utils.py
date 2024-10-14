@@ -1,6 +1,7 @@
 import os
 from typing import List
 import datetime
+import pytz
 
 class DeltaValueError(Exception):
     """Custom exception for invalid delta format."""
@@ -14,6 +15,19 @@ def get_major_tz_from_env() -> List[str]:
         return []
 
 def callDelta(time: datetime.datetime, delta: str) -> datetime.datetime:
+    """
+    Apply a time delta to a given datetime object.
+
+    Args:
+        time (datetime.datetime): The original datetime object.
+        delta (str): The time delta to apply (e.g., +2hr, -30min, -1day).
+
+    Returns:
+        datetime.datetime: The updated datetime object with the delta applied.
+
+    Raises:
+        DeltaValueError: If the delta format is invalid.
+    """
     if 'hr' in delta:
         hours = int(delta.replace('hr', ''))
         time += datetime.timedelta(hours=hours)
@@ -26,3 +40,20 @@ def callDelta(time: datetime.datetime, delta: str) -> datetime.datetime:
     else:
         raise DeltaValueError("Invalid time format. Use +2hr, -30min, -1day, etc.")
     return time
+
+def convert_timezone(time: datetime.datetime, target_timezone: str) -> datetime.datetime:
+    """
+    Convert a datetime object to a different timezone.
+
+    Args:
+        time (datetime.datetime): The original datetime object.
+        target_timezone (str): The target timezone to convert to.
+
+    Returns:
+        datetime.datetime: The converted datetime object.
+
+    Raises:
+        pytz.exceptions.UnknownTimeZoneError: If the target timezone is unknown.
+    """
+    target_tz = pytz.timezone(target_timezone)
+    return time.astimezone(target_tz)

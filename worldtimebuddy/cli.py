@@ -2,7 +2,7 @@ import datetime
 import pytz
 import click
 
-from worldtimebuddy.utils import get_major_tz_from_env, callDelta, DeltaValueError
+from worldtimebuddy.utils import get_major_tz_from_env, callDelta, DeltaValueError, convert_timezone
 from worldtimebuddy.constants import timezone_codes
 
 MAJOR_TIMEZONES = get_major_tz_from_env() or ['UTC', 'US/Pacific', 'Asia/Kolkata']
@@ -13,7 +13,8 @@ MAJOR_TIMEZONES = get_major_tz_from_env() or ['UTC', 'US/Pacific', 'Asia/Kolkata
 @click.option('--timezone', '-tz', help='Show time for a specific timezone')
 @click.option('--list', 'list_timezones', is_flag=True, help='List all available timezones')
 @click.option('--delta', help='Time to add (e.g., +2hr, -30min, -1day)')
-def cli(format, major, timezone, list_timezones, delta):
+@click.option('--convert', '-c', help='Convert time from one timezone to another')
+def cli(format, major, timezone, list_timezones, delta, convert):
     """
     Display current time for all timezones, major timezones, or a specific timezone.
     """
@@ -39,10 +40,22 @@ def cli(format, major, timezone, list_timezones, delta):
                     click.echo(f"DeltaValueError: {e}")
                     return
 
-            click.echo(f"{timezone:<30} {time.strftime(format)}")
+            if convert:
+                # Map short timezone code to full name if applicable
+                convert = timezone_codes.get(convert, convert)
+                try:
+                    converted_time = convert_timezone(time, convert)
+                    click.echo(f"Original time in {timezone}: {time.strftime(format)}")
+                    click.echo(f"Converted time in {convert}: {converted_time.strftime(format)}")
+                except pytz.exceptions.UnknownTimeZoneError:
+                    click.echo(f"Error: Unknown target timezone '{convert}'")
+                    click.echo("Use 'worldtimebuddy --list' to see all available timezones")
+                    return
+            else:
+                click.echo(f"{timezone:<30} {time.strftime(format)}")
         except pytz.exceptions.UnknownTimeZoneError:
             click.echo(f"Error: Unknown timezone '{timezone}'")
-            click.echo("Use 'gettime --list' to see all available timezones")
+            click.echo("Use 'worldtimebuddy --list' to see all available timezones")
     elif major:
         for tz in MAJOR_TIMEZONES:
             timezone = pytz.timezone(tz)
