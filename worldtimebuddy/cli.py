@@ -3,6 +3,7 @@ import pytz
 import click
 
 from worldtimebuddy.utils import get_major_tz_from_env, callDelta
+from worldtimebuddy.utils import get_major_tz_from_env, callDelta, DeltaValueError
 from worldtimebuddy.constants import timezone_codes
 
 MAJOR_TIMEZONES = get_major_tz_from_env() or ['UTC', 'US/Pacific', 'Asia/Kolkata']
@@ -37,6 +38,8 @@ def cli(format, major, timezone, list_timezones, delta):
                     time = callDelta(time, delta)
                 except ValueError as e:
                     click.echo(f"Error: {e}")
+                except DeltaValueError as e:
+                    click.echo(f"DeltaValueError: {e}")
                     return
 
             click.echo(f"{timezone:<30} {time.strftime(format)}")
