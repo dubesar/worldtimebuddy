@@ -57,16 +57,3 @@ def convert_timezone(time: datetime.datetime, target_timezone: str) -> datetime.
     """
     target_tz = pytz.timezone(target_timezone)
     return time.astimezone(target_tz)
-
-def time_diff(time1: datetime.datetime, time2: datetime.datetime) -> datetime.timedelta:
-    """
-    Calculate the difference between two datetime objects.
-
-    Args:
-        time1 (datetime.datetime): The first datetime object.
-        time2 (datetime.datetime): The second datetime object.
-
-    Returns:
-        datetime.timedelta: The difference between the two datetime objects.
-    """
-    return time2 - time1

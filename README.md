@@ -16,7 +16,8 @@ Options:
   --major               Show only major timezones
   -tz, --timezone TEXT  Show time for a specific timezone
   --list                List all available timezones
-  --delta TEXT          Add or subtract time from a particular timezone
+  --delta TEXT          Time to add (e.g., +2hr, -30min, -1day)
+  -c, --convert TEXT    Convert time from one timezone to another
   --help                Show this message and exit.
 ```
 
@@ -105,5 +106,13 @@ Asia/Tokyo                     2024-10-07 04:33:35
 ```
 > worldtimebuddy --timezone UTC --delta +2hr
 UTC                            2024-10-06 20:43:35
+...
+```
+
+7. Convert time from one timzone to another
+```
+> worldtimebuddy --timezone IST --convert UTC
+Original time in Asia/Kolkata: 2024-10-14 12:13:57
+Converted time in UTC: 2024-10-14 06:43:57
 ...
 ```
