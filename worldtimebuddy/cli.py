@@ -2,7 +2,7 @@ import datetime
 import pytz
 import click
 
-from worldtimebuddy.utils import get_major_tz_from_env, callDelta, DeltaValueError
+from worldtimebuddy.utils import get_major_tz_from_env, callDelta, DeltaValueError, convert_timezone, time_diff
 from worldtimebuddy.constants import timezone_codes
 
 MAJOR_TIMEZONES = get_major_tz_from_env() or ['UTC', 'US/Pacific', 'Asia/Kolkata']
@@ -40,7 +40,21 @@ def cli(format, major, timezone, list_timezones, delta, convert):
                     click.echo(f"DeltaValueError: {e}")
                     return
 
-            click.echo(f"{timezone:<30} {time.strftime(format)}")
+            if convert:
+                # Map short timezone code to full name if applicable
+                convert = timezone_codes.get(convert, convert)
+                try:
+                    converted_time = convert_timezone(time, convert)
+                    time_difference = time_diff(time, converted_time)
+                    click.echo(f"Original time in {timezone}: {time.strftime(format)}")
+                    click.echo(f"Converted time in {convert}: {converted_time.strftime(format)}")
+                    click.echo(f"Time difference: {time_difference}")
+                except pytz.exceptions.UnknownTimeZoneError:
+                    click.echo(f"Error: Unknown target timezone '{convert}'")
+                    click.echo("Use 'gettime --list' to see all available timezones")
+                    return
+            else:
+                click.echo(f"{timezone:<30} {time.strftime(format)}")
         except pytz.exceptions.UnknownTimeZoneError:
             click.echo(f"Error: Unknown timezone '{timezone}'")
             click.echo("Use 'gettime --list' to see all available timezones")
